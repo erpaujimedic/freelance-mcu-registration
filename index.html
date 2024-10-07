@@ -6,71 +6,173 @@
     <title>Freelance MCU Registration</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1) 0%, rgba(0, 210, 255, 1) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        h2 {
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
             color: #333;
         }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        input[type="text"], input[type="email"] {
+        input[type="text"], input[type="tel"], select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
             border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
         }
         input[type="submit"] {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 12px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        .hidden {
+            display: none;
+        }
+        .form-container p {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 30px;
+            }
+            input[type="text"], input[type="tel"], select, input[type="submit"] {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>Freelance MCU Registration</h2>
-    <form id="mcuForm">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        
-        <label for="phone">Phone:</label><br>
-        <input type="text" id="phone" name="phone" required><br><br>
-        
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-        
-        <label for="skill">Skill:</label><br>
-        <input type="text" id="skill" name="skill" required><br><br>
-        
-        <input type="submit" value="Submit">
-    </form>
+    <div class="form-container">
+        <h2>Freelance MCU Registration</h2>
+        <form id="mcuForm">
+            <label for="name">Nama:</label>
+            <input type="text" id="name" name="name" placeholder="Nama Anda" required>
+            
+            <label for="phone">Nomor Handphone (WA):</label>
+            <input type="tel" id="phone" name="phone" placeholder="Nomor WhatsApp" required>
+            
+            <label for="address">Alamat Domisili:</label>
+            <input type="text" id="address" name="address" placeholder="Masukkan Alamat" required>
+            
+            <label for="postalcode">Kode Pos:</label>
+            <input type="text" id="postalcode" name="postalcode" placeholder="Masukkan Kode Pos" required onblur="getLocationDetails()">
+            
+            <label for="kelurahan">Kelurahan:</label>
+            <input type="text" id="kelurahan" name="kelurahan" placeholder="Kelurahan" readonly>
+
+            <label for="kecamatan">Kecamatan:</label>
+            <input type="text" id="kecamatan" name="kecamatan" placeholder="Kecamatan" readonly>
+
+            <label for="kabupaten">Kabupaten/Kota:</label>
+            <input type="text" id="kabupaten" name="kabupaten" placeholder="Kabupaten/Kota" readonly>
+
+            <label for="provinsi">Provinsi:</label>
+            <input type="text" id="provinsi" name="provinsi" placeholder="Provinsi" readonly>
+
+            <label for="posisi">Posisi:</label>
+            <select id="posisi" name="posisi" required>
+                <option value="" disabled selected>Pilih Posisi</option>
+                <option value="Administrasi">Administrasi</option>
+                <option value="Perawat">Perawat</option>
+                <option value="Dokter">Dokter</option>
+                <option value="Analis">Analis</option>
+                <option value="Radiografer">Radiografer</option>
+            </select>
+
+            <!-- Dropdown khusus untuk Perawat -->
+            <div id="perawat-options" class="hidden">
+                <label for="perawat-tasks">Tugas Perawat:</label>
+                <select id="perawat-tasks" name="perawat-tasks">
+                    <option value="" disabled selected>Pilih Tugas Perawat</option>
+                    <option value="Tensi">Tensi</option>
+                    <option value="Visus Mata">Visus Mata</option>
+                    <option value="Treadmill">Treadmill</option>
+                    <option value="EKG">EKG</option>
+                    <option value="Audiometri">Audiometri</option>
+                </select>
+            </div>
+
+            <input type="submit" value="Daftar Sekarang">
+        </form>
+        <p>Freelance MCU Platform &copy; 2024</p>
+    </div>
 
     <script>
+        // Menampilkan opsi Perawat jika posisi Perawat dipilih
+        document.getElementById('posisi').addEventListener('change', function() {
+            var posisiValue = this.value;
+            var perawatOptions = document.getElementById('perawat-options');
+            
+            if (posisiValue === 'Perawat') {
+                perawatOptions.classList.remove('hidden');
+            } else {
+                perawatOptions.classList.add('hidden');
+            }
+        });
+
+        // Fungsi untuk mengambil detail lokasi berdasarkan kode pos
+        function getLocationDetails() {
+            var postalcode = document.getElementById('postalcode').value;
+            if(postalcode) {
+                // Contoh menggunakan API Zippopotam
+                fetch(`https://api.zippopotam.us/id/${postalcode}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(data && data.places) {
+                        var place = data.places[0];
+                        document.getElementById('kelurahan').value = place['place name'] || '';
+                        document.getElementById('kecamatan').value = place['state'] || '';
+                        document.getElementById('kabupaten').value = place['county'] || '';
+                        document.getElementById('provinsi').value = place['state abbreviation'] || '';
+                    } else {
+                        alert('Data lokasi tidak ditemukan untuk kode pos ini.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Tidak dapat mengambil detail lokasi.');
+                });
+            }
+        }
+
+        // JavaScript untuk menangani form submission
         document.getElementById('mcuForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(document.getElementById('mcuForm'));
-            fetch('https://script.google.com/macros/s/AKfycbzYuFsfqS4POhqEO3pIDaWAt2t1rplvYlWL5sV7zVNwAF9pRvvGmJybpunI9heqkKF-/exec', {
+            fetch('https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_URL/exec', {
                 method: 'POST',
                 body: formData
             }).then(response => response.json()).then(data => {
                 if (data.result === 'success') {
-                    alert('Registration successful!');
+                    alert('Pendaftaran berhasil!');
                 } else {
-                    alert('Registration failed. Please try again.');
+                    alert('Pendaftaran gagal. Coba lagi.');
                 }
             });
         });
