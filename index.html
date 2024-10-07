@@ -3,179 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelance MCU Registration</title>
+    <title>Pendaftaran Freelance MCU - Dynamic Form</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300&display=swap');
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(90deg, rgba(0, 123, 255, 1) 0%, rgba(0, 210, 255, 1) 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-        }
-        .form-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
-        }
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 30px;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 30%, #c3cfe2 100%);
+            font-family: 'Poppins', sans-serif;
             color: #333;
         }
-        input[type="text"], input[type="tel"], select {
+        .form-container {
+            width: 500px;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            text-align: center;
+            color: #4c4a50;
+            margin-bottom: 30px;
+        }
+        h1::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #4c4a50;
+            margin: 10px auto 0;
+        }
+        input[type="text"], input[type="tel"], select, textarea, input[type="file"] {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            background-color: #fafafa;
+            font-size: 14px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .submit-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
         }
         input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 12px;
+            background-color: #ff6f61;
+            color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #e65b55;
         }
-        .hidden {
+        .whatsapp-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 48px;
+            height: 48px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        .whatsapp-btn img {
+            width: 24px;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1EBB5D;
+        }
+        label {
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .hidden-section {
             display: none;
         }
-        .form-container p {
-            font-size: 14px;
+        footer {
+            font-size: 12px;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
+            color: #888;
         }
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 30px;
-            }
-            input[type="text"], input[type="tel"], select, input[type="submit"] {
-                font-size: 14px;
-            }
+        footer a {
+            color: #ff6f61;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Freelance MCU Registration</h2>
-        <form id="mcuForm">
-            <label for="name">Nama:</label>
-            <input type="text" id="name" name="name" placeholder="Nama Anda" required>
-            
-            <label for="phone">Nomor Handphone (WA):</label>
-            <input type="tel" id="phone" name="phone" placeholder="Nomor WhatsApp" required>
-            
-            <label for="address">Alamat Domisili:</label>
-            <input type="text" id="address" name="address" placeholder="Masukkan Alamat" required>
-            
-            <label for="postalcode">Kode Pos:</label>
-            <input type="text" id="postalcode" name="postalcode" placeholder="Masukkan Kode Pos" required onblur="getLocationDetails()">
-            
-            <label for="kelurahan">Kelurahan:</label>
-            <input type="text" id="kelurahan" name="kelurahan" placeholder="Kelurahan" readonly>
 
-            <label for="kecamatan">Kecamatan:</label>
-            <input type="text" id="kecamatan" name="kecamatan" placeholder="Kecamatan" readonly>
+<div class="form-container">
+    <h1>Pendaftaran Freelance MCU</h1>
+    <form id="mcuForm" enctype="multipart/form-data">
+        <label for="name">Nama Lengkap:</label>
+        <input type="text" name="name" id="name" placeholder="Nama Lengkap" required>
 
-            <label for="kabupaten">Kabupaten/Kota:</label>
-            <input type="text" id="kabupaten" name="kabupaten" placeholder="Kabupaten/Kota" readonly>
+        <label for="phone">Nomor Handphone:</label>
+        <input type="tel" name="phone" id="phone" placeholder="Nomor Handphone" required>
+
+        <label for="alamat">Alamat Domisili:</label>
+        <input type="text" name="alamat" id="alamat" placeholder="Alamat Domisili" required>
+
+        <!-- Kota dan Provinsi hanya muncul setelah mengisi alamat domisili -->
+        <div id="location-section" class="hidden-section">
+            <label for="kota">Kota:</label>
+            <input type="text" name="kota" id="kota" placeholder="Kota" required>
 
             <label for="provinsi">Provinsi:</label>
-            <input type="text" id="provinsi" name="provinsi" placeholder="Provinsi" readonly>
+            <input type="text" name="provinsi" id="provinsi" placeholder="Provinsi" required>
+        </div>
 
-            <label for="posisi">Posisi:</label>
-            <select id="posisi" name="posisi" required>
-                <option value="" disabled selected>Pilih Posisi</option>
-                <option value="Administrasi">Administrasi</option>
-                <option value="Perawat">Perawat</option>
-                <option value="Dokter">Dokter</option>
-                <option value="Analis">Analis</option>
-                <option value="Radiografer">Radiografer</option>
-            </select>
+        <label for="posisi">Posisi:</label>
+        <select name="posisi" id="posisi" required>
+            <option value="" disabled selected>Pilih Posisi</option>
+            <option value="Administrasi">Administrasi</option>
+            <option value="Perawat">Perawat</option>
+            <option value="Dokter">Dokter</option>
+            <option value="Analis">Analis</option>
+            <option value="Radiografer">Radiografer</option>
+        </select>
 
-            <!-- Dropdown khusus untuk Perawat -->
-            <div id="perawat-options" class="hidden">
-                <label for="perawat-tasks">Tugas Perawat:</label>
-                <select id="perawat-tasks" name="perawat-tasks">
-                    <option value="" disabled selected>Pilih Tugas Perawat</option>
-                    <option value="Tensi">Tensi</option>
-                    <option value="Visus Mata">Visus Mata</option>
-                    <option value="Treadmill">Treadmill</option>
-                    <option value="EKG">EKG</option>
-                    <option value="Audiometri">Audiometri</option>
-                </select>
-            </div>
+        <!-- Tugas Perawat hanya muncul jika posisi Perawat dipilih -->
+        <div id="perawat-options" class="hidden-section">
+            <label><input type="checkbox" name="tugas" value="Tensi"> Tensi</label>
+            <label><input type="checkbox" name="tugas" value="Visus Mata"> Visus Mata</label>
+            <label><input type="checkbox" name="tugas" value="EKG"> EKG</label>
+            <label><input type="checkbox" name="tugas" value="Treadmill"> Treadmill</label>
+            <label><input type="checkbox" name="tugas" value="Audiometri"> Audiometri</label>
+            <label><input type="checkbox" name="tugas" value="Spirometri"> Spirometri</label>
+            <label for="tugas-lainnya">Lainnya (sebutkan):</label>
+            <textarea name="tugas-lainnya" id="tugas-lainnya" rows="3" placeholder="Tulis tugas lainnya..."></textarea>
+        </div>
 
-            <input type="submit" value="Daftar Sekarang">
-        </form>
-        <p>Freelance MCU Platform &copy; 2024</p>
-    </div>
+        <label for="cv">Upload CV Terbaru (PDF, max 10 MB):</label>
+        <input type="file" name="cv" id="cv" accept=".pdf" required>
 
-    <script>
-        // Menampilkan opsi Perawat jika posisi Perawat dipilih
-        document.getElementById('posisi').addEventListener('change', function() {
-            var posisiValue = this.value;
-            var perawatOptions = document.getElementById('perawat-options');
-            
-            if (posisiValue === 'Perawat') {
-                perawatOptions.classList.remove('hidden');
-            } else {
-                perawatOptions.classList.add('hidden');
-            }
-        });
+        <div class="submit-container">
+            <input type="submit" value="Daftar">
+            <a href="https://wa.me/6285888181119?text=Halo%20saya%20mengalami%20kendala%20pada%20formulir%20pendaftaran,%20bisa%20bantu%20saya?" class="whatsapp-btn" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            </a>
+        </div>
+    </form>
+    <footer>
+        Freelance MCU Platform &copy; 2024
+    </footer>
+</div>
 
-        // Fungsi untuk mengambil detail lokasi berdasarkan kode pos
-        function getLocationDetails() {
-            var postalcode = document.getElementById('postalcode').value;
-            if(postalcode) {
-                // Contoh menggunakan API Zippopotam
-                fetch(`https://api.zippopotam.us/id/${postalcode}`)
-                .then(response => response.json())
-                .then(data => {
-                    if(data && data.places) {
-                        var place = data.places[0];
-                        document.getElementById('kelurahan').value = place['place name'] || '';
-                        document.getElementById('kecamatan').value = place['state'] || '';
-                        document.getElementById('kabupaten').value = place['county'] || '';
-                        document.getElementById('provinsi').value = place['state abbreviation'] || '';
-                    } else {
-                        alert('Data lokasi tidak ditemukan untuk kode pos ini.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Tidak dapat mengambil detail lokasi.');
-                });
-            }
+<script>
+    document.getElementById('alamat').addEventListener('input', function() {
+        var locationSection = document.getElementById('location-section');
+        if (this.value.length > 0) {
+            locationSection.style.display = 'block';
+        } else {
+            locationSection.style.display = 'none';
+        }
+    });
+
+    document.getElementById('posisi').addEventListener('change', function() {
+        var perawatOptions = document.getElementById('perawat-options');
+        if (this.value === 'Perawat') {
+            perawatOptions.style.display = 'block';
+        } else {
+            perawatOptions.style.display = 'none';
+        }
+    });
+
+    document.getElementById('mcuForm').addEventListener('submit', function (e) {
+        var cvFile = document.getElementById('cv').files[0];
+        if (cvFile && cvFile.size > 10 * 1024 * 1024) {
+            alert("Ukuran file CV tidak boleh lebih dari 10 MB");
+            e.preventDefault();
+            return;
         }
 
-        // JavaScript untuk menangani form submission
-        document.getElementById('mcuForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(document.getElementById('mcuForm'));
-            fetch('https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_URL/exec', {
-                method: 'POST',
-                body: formData
-            }).then(response => response.json()).then(data => {
-                if (data.result === 'success') {
-                    alert('Pendaftaran berhasil!');
-                } else {
-                    alert('Pendaftaran gagal. Coba lagi.');
-                }
-            });
+        var formData = new FormData(document.getElementById('mcuForm'));
+        fetch('https://script.google.com/macros/s/AKfycbzYuFsfqS4POhqEO3pIDaWAt2t1rplvYlWL5sV7zVNwAF9pRvvGmJybpunI9heqkKF-/exec', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json()).then(data => {
+            if (data.result === 'success') {
+                alert('Pendaftaran berhasil!');
+            } else {
+                alert('Pendaftaran gagal. Coba lagi.');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan. Coba lagi.');
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
