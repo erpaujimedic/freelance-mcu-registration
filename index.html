@@ -190,24 +190,27 @@
     });
 
     document.getElementById('mcuForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Mencegah refresh halaman
+
         var cvFile = document.getElementById('cv').files[0];
         if (cvFile && cvFile.size > 10 * 1024 * 1024) {
             alert("Ukuran file CV tidak boleh lebih dari 10 MB");
-            e.preventDefault();
             return;
         }
 
         var formData = new FormData(document.getElementById('mcuForm'));
-        fetch('https://script.google.com/macros/s/AKfycbzYuFsfqS4POhqEO3pIDaWAt2t1rplvYlWL5sV7zVNwAF9pRvvGmJybpunI9heqkKF-/exec', {
+
+        // Ubah URL fetch ke endpoint API yang Anda miliki
+        fetch('https://script.google.com/macros/s/AKfycbzYuFsfqS4POhqEO3pIDaWAt2t1rplvYlWL5sV7zVNwAF9pRvvGmJybpunI9heqkKF-/exec', { // ganti dengan URL sebenarnya
             method: 'POST',
             body: formData
-        }).then(response => response.json()).then(data => {
-            if (data.result === 'success') {
-                alert('Pendaftaran berhasil!');
-            } else {
-                alert('Pendaftaran gagal. Coba lagi.');
-            }
-        }).catch(error => {
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            alert('Pendaftaran berhasil!');
+        })
+        .catch(error => {
             console.error('Error:', error);
             alert('Terjadi kesalahan. Coba lagi.');
         });
