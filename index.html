@@ -149,13 +149,11 @@
             <option value="Lainnya">Lainnya</option>
         </select>
 
-        <!-- Bagian input untuk posisi lainnya -->
         <div id="posisi-lainnya" class="hidden-section">
             <label for="posisiLainnya">Posisi Lainnya:</label>
             <input type="text" name="posisiLainnya" id="posisiLainnya" placeholder="Posisi Lainnya">
         </div>
 
-        <!-- Bagian tambahan untuk Perawat -->
         <div id="perawat-options" class="hidden-section">
             <label>Pilih Bagian Perawat:</label><br>
             <label><input type="checkbox" name="tugas" value="Tensi"> Tensi</label><br>
@@ -164,7 +162,6 @@
             <label><input type="checkbox" name="tugas" value="EKG"> EKG</label><br>
             <label><input type="checkbox" name="tugas" value="Treadmill"> Treadmill</label><br>
             <label><input type="checkbox" name="tugas" value="Visus Mata"> Visus Mata</label><br>
-            <!-- Kolom lainnya untuk Perawat -->
             <label for="tugasLainnya">Bagian Lainnya (sebutkan):</label>
             <input type="text" name="tugasLainnya" id="tugasLainnya" placeholder="Bagian Lainnya">
         </div>
@@ -176,7 +173,7 @@
     </form>
     
     <a href="https://wa.me/085888181119?text=Halo, saya ingin menanyakan lebih lanjut tentang pendaftaran freelance MCU." class="whatsapp-btn">
-        Hubungi Kami di WhatsApp
+        Hubungi Saya di WhatsApp
     </a>
 </div>
 
@@ -186,29 +183,30 @@
 
         var formData = new FormData(document.getElementById('mcuForm'));
 
-        // Cek ukuran file sebelum mengirim
-        var cvFile = document.getElementById('cv').files[0];
-        if (cvFile && cvFile.size > 10 * 1024 * 1024) {
-            alert("Ukuran file CV tidak boleh lebih dari 10 MB");
-            return;
-        }
-
-        // Kirim data ke Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', { // Ganti dengan URL Google Apps Script Web App Anda
+        // Upload file CV ke Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycby3iRLab3M3YI7ey9onAS8IJip39g-QnHZYB8k2oSqInqWuIpCxFbf0hveGiHR_yFqkNA/exec', { // Ganti dengan URL Google Apps Script untuk upload CV
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.result === 'success') {
-                alert('Pendaftaran berhasil!');
+        .then(response => response.json())
+        .then(fileResponse => {
+            if (fileResponse.result === 'success') {
+                // Setelah file berhasil di-upload, kirim data lainnya
+                formData.append('cvUrl', fileResponse.cvUrl);
+                fetch('https://script.google.com/macros/s/AKfycbwgFFXVUy4kCJ3PfLVQPqZZsw4aH4vJ1kbkXMkT-NSHfSkQLSgbwTF49LKwNkXt4f48dA/exec', { // Ganti dengan URL Google Apps Script untuk simpan data
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(dataResponse => {
+                    if (dataResponse.result === 'success') {
+                        alert('Pendaftaran berhasil!');
+                    } else {
+                        alert('Pendaftaran gagal. Coba lagi.');
+                    }
+                });
             } else {
-                alert('Pendaftaran gagal. Coba lagi.');
+                alert('Upload CV gagal. Coba lagi.');
             }
         })
         .catch(error => {
@@ -217,7 +215,6 @@
         });
     });
 
-    // Tampilkan kolom tambahan ketika "Perawat" atau "Lainnya" dipilih
     document.getElementById('posisi').addEventListener('change', function () {
         var perawatOptions = document.getElementById('perawat-options');
         var posisiLainnya = document.getElementById('posisi-lainnya');
