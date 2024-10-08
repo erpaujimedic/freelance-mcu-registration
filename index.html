@@ -5,61 +5,179 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Freelance MCU</title>
     <style>
-        /* Gaya sederhana untuk form */
+        /* Gaya tema JavaScript - minimalis, melayang, monospaced font, warna hitam, kuning, dan putih */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto Mono', monospace;
             margin: 0;
             padding: 0;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f7f7f7;
-        }
-        .form-container {
-            background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            box-sizing: border-box;
         }
+        
+        .form-container {
+            background-color: #262626;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #d4d4d4;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
         input, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            background-color: transparent;
+            color: #dcdcdc;
+            border: none;
+            border-bottom: 1px solid #3c3c3c;
+            border-radius: 0;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
         }
+        
+        input:focus, select:focus {
+            border-color: #f9d12e;
+            outline: none;
+        }
+        
         input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #f9d12e;
+            color: #1e1e1e;
+            font-weight: 500;
+            border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
+        
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #e0b91e;
         }
+        
+        .whatsapp-btn {
+            display: block;
+            text-align: center;
+            background-color: #25D366;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #1ebc5c;
+        }
+        
+        label {
+            color: #dcdcdc;
+            font-size: 12px;
+        }
+        
+        .hidden-section {
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Tambahan untuk tampilan mobile */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .form-container {
+                padding: 20px;
+            }
+            input, select {
+                padding: 10px;
+            }
+            input[type="submit"] {
+                padding: 10px;
+            }
+            .whatsapp-btn {
+                padding: 10px;
+            }
+        }
+
     </style>
 </head>
 <body>
 
 <div class="form-container">
     <h2>Pendaftaran Freelance MCU</h2>
-    <form id="mcuForm">
-        <input type="text" name="name" placeholder="Nama Lengkap" required>
-        <input type="tel" name="phone" placeholder="Nomor Handphone" required>
-        <input type="text" name="alamat" placeholder="Alamat Domisili" required>
-        <input type="text" name="kota" placeholder="Kota" required>
-        <input type="text" name="provinsi" placeholder="Provinsi" required>
-        <select name="posisi" required>
+    <form id="mcuForm" enctype="multipart/form-data">
+        <label for="name">Nama Lengkap</label>
+        <input type="text" name="name" id="name" placeholder="Nama Lengkap" required>
+        
+        <label for="phone">Nomor Handphone</label>
+        <input type="tel" name="phone" id="phone" placeholder="Nomor Handphone" required>
+        
+        <label for="alamat">Alamat Domisili</label>
+        <input type="text" name="alamat" id="alamat" placeholder="Alamat Domisili" required>
+        
+        <label for="kota">Kota</label>
+        <input type="text" name="kota" id="kota" placeholder="Kota" required>
+        
+        <label for="provinsi">Provinsi</label>
+        <input type="text" name="provinsi" id="provinsi" placeholder="Provinsi" required>
+        
+        <label for="posisi">Posisi</label>
+        <select name="posisi" id="posisi" required>
             <option value="" disabled selected>Pilih Posisi</option>
             <option value="Administrasi">Administrasi</option>
             <option value="Perawat">Perawat</option>
             <option value="Dokter">Dokter</option>
             <option value="Analis">Analis</option>
             <option value="Radiografer">Radiografer</option>
+            <option value="Lainnya">Lainnya</option>
         </select>
+
+        <!-- Bagian input untuk posisi lainnya -->
+        <div id="posisi-lainnya" class="hidden-section">
+            <label for="posisiLainnya">Posisi Lainnya:</label>
+            <input type="text" name="posisiLainnya" id="posisiLainnya" placeholder="Posisi Lainnya">
+        </div>
+
+        <!-- Bagian tambahan untuk Perawat -->
+        <div id="perawat-options" class="hidden-section">
+            <label>Pilih Bagian Perawat:</label><br>
+            <label><input type="checkbox" name="tugas" value="Tensi"> Tensi</label><br>
+            <label><input type="checkbox" name="tugas" value="Audiometri"> Audiometri</label><br>
+            <label><input type="checkbox" name="tugas" value="Spirometri"> Spirometri</label><br>
+            <label><input type="checkbox" name="tugas" value="EKG"> EKG</label><br>
+            <label><input type="checkbox" name="tugas" value="Treadmill"> Treadmill</label><br>
+            <label><input type="checkbox" name="tugas" value="Visus Mata"> Visus Mata</label><br>
+            <!-- Kolom lainnya untuk Perawat -->
+            <label for="tugasLainnya">Bagian Lainnya (sebutkan):</label>
+            <input type="text" name="tugasLainnya" id="tugasLainnya" placeholder="Bagian Lainnya">
+        </div>
+
+        <label for="cv">Upload CV (PDF)</label>
+        <input type="file" name="cv" id="cv" accept=".pdf" required>
+        
         <input type="submit" value="Daftar">
     </form>
+    
+    <a href="https://wa.me/085888181119?text=Halo, saya ingin menanyakan lebih lanjut tentang pendaftaran freelance MCU." class="whatsapp-btn">
+        Hubungi Saya di WhatsApp
+    </a>
 </div>
 
 <script>
@@ -68,8 +186,15 @@
 
         var formData = new FormData(document.getElementById('mcuForm'));
 
+        // Cek ukuran file sebelum mengirim
+        var cvFile = document.getElementById('cv').files[0];
+        if (cvFile && cvFile.size > 10 * 1024 * 1024) {
+            alert("Ukuran file CV tidak boleh lebih dari 10 MB");
+            return;
+        }
+
         // Kirim data ke Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbyz_8v3kHQy-jVAoEdOICjJNWYpSIf_O3Qh96kE8Fs/dev', { // Ganti dengan URL yang Anda dapat dari Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbwBPJ-GJyOZbJt0vJ8HB6YfPDO_Uu8IDPSxkuigbopJ6NqzDcP3sIoPzVTHrp-ahAd6xA/exec', { // Ganti dengan URL Google Apps Script Web App Anda
             method: 'POST',
             body: formData
         })
@@ -85,6 +210,22 @@
             console.error('Error:', error);
             alert('Terjadi kesalahan. Coba lagi.');
         });
+    });
+
+    // Tampilkan kolom tambahan ketika "Perawat" atau "Lainnya" dipilih
+    document.getElementById('posisi').addEventListener('change', function () {
+        var perawatOptions = document.getElementById('perawat-options');
+        var posisiLainnya = document.getElementById('posisi-lainnya');
+        if (this.value === 'Perawat') {
+            perawatOptions.style.display = 'block';
+            posisiLainnya.style.display = 'none';
+        } else if (this.value === 'Lainnya') {
+            posisiLainnya.style.display = 'block';
+            perawatOptions.style.display = 'none';
+        } else {
+            perawatOptions.style.display = 'none';
+            posisiLainnya.style.display = 'none';
+        }
     });
 </script>
 
