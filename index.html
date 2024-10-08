@@ -96,7 +96,7 @@ document.getElementById('position').addEventListener('change', function() {
   }
 });
 
-// Fungsi pengiriman data form menggunakan fetch
+// Fungsi pengiriman data form
 document.getElementById('mcuForm').addEventListener('submit', function(e) {
   e.preventDefault();  // Mencegah reload halaman
 
@@ -107,38 +107,61 @@ document.getElementById('mcuForm').addEventListener('submit', function(e) {
   reader.onloadend = function() {
     var base64File = reader.result.split(',')[1];
 
-    var data = {
+    // Data yang akan dikirim ke Google Sheets
+    var dataForSheets = {
       name: formData.get('name'),
       phone: formData.get('phone'),
       city: formData.get('city'),
       province: formData.get('province'),
       position: formData.get('position'),
-      nurseSpecialty: formData.get('nurseSpecialty'),
+      nurseSpecialty: formData.get('nurseSpecialty')
+    };
+
+    // Data yang akan dikirim ke Google Drive (CV)
+    var dataForDrive = {
+      name: formData.get('name'),
       cv: base64File,
       cvMimeType: file.type
     };
 
-    // Ganti URL_APPS_SCRIPT_KAMU dengan URL dari Google Apps Script
-    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
+    // Kirim data ke Google Sheets
+    fetch('https://script.google.com/macros/s/AKfycbyDh66Ln5ZDGrgeuEQ4Ei1BvNuyDa3HY8fuO5Kmc0I-yqFZvPQ2YIoFtXURpwGXVGeYxQ/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(dataForSheets)
     })
     .then(response => response.json())
     .then(data => {
       if (data.status === 'success') {
-        alert('Formulir berhasil dikirim!');
+        alert('Data berhasil dikirim ke Google Sheets!');
       } else {
-        alert('Terjadi kesalahan saat pengiriman.');
+        alert('Terjadi kesalahan saat mengirim data ke Google Sheets.');
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('Terjadi kesalahan pada jaringan.');
+    });
+
+ // Kirim CV ke Google Drive
+    fetch('https://script.google.com/macros/s/AKfycbz1VQoDwi3DAOR9Ux5QvYMZ0fhIlAZFplEjNC3h19F43Iwoonhrx6ohItmqbzCqMB9n0g/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataForDrive)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('CV berhasil diunggah ke Google Drive!');
+      } else {
+        alert('Terjadi kesalahan saat mengunggah CV ke Google Drive.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
   };
 
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(file); // Membaca file sebagai base64
 });
 </script>
 
