@@ -1,169 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Pendaftaran Freelance MCU</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #eef2f7;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-    }
-    label {
-      font-weight: bold;
-    }
-    select, input {
-      width: 100%;
-      padding: 8px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      width: 100%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #nurseSubsection {
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran MCU</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #000;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid #000;
+            border-radius: 0;
+            font-family: inherit;
+            background-color: #f8f9fa;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .actions img {
+            width: 30px;
+            height: 30px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <div class="form-container">
+        <h2>Pendaftaran Freelancer MCU</h2>
+        <form id="mcuForm">
+            <label for="name">Nama Lengkap:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="whatsapp">Nomor WhatsApp:</label>
+            <input type="text" id="whatsapp" name="whatsapp" required>
+            
+            <label for="address">Alamat Domisili:</label>
+            <input id="address" name="address" required>
+            
+            <label for="city">Kota:</label>
+            <input type="text" id="city" name="city" required>
+            
+            <label for="province">Provinsi:</label>
+            <input type="text" id="province" name="province" required>
+            
+            <label for="position">Posisi:</label>
+            <select id="position" name="position" required>
+                <option value="Doctor">Dokter</option>
+                <option value="Nurse">Perawat</option>
+                <option value="Analyst">Analis</option>
+                <option value="Radiographer">Radiografer</option>
+                <option value="Administrator">Admin</option>
+                <option value="Other">Lainnya (isi sendiri)</option>
+            </select>
 
-<h2>Pendaftaran Freelance MCU</h2>
-<form id="mcuForm" enctype="multipart/form-data">
-  <label for="name">Nama:</label>
-  <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
+            <div id="otherPosition" class="hidden">
+                <label for="otherPositionText">Isi Posisi Lainnya:</label>
+                <input type="text" id="otherPositionText" name="otherPositionText">
+            </div>
 
-  <label for="phone">Nomor WhatsApp:</label>
-  <input type="text" id="phone" name="phone" placeholder="Masukkan nomor WA" required>
+            <div id="nurseSubposition" class="hidden">
+                <label for="subPosition">Sub-Posisi Perawat:</label>
+                <select id="subPosition" name="subPosition">
+                    <option value="Audiometry">Audiometri</option>
+                    <option value="Spirometry">Spirometri</option>
+                    <option value="ECG">ECG</option>
+                    <option value="Treadmill">Treadmill</option>
+                    <option value="Vision Test">Tes Penglihatan</option>
+                    <option value="Blood Pressure">Tekanan Darah</option>
+                    <option value="OtherSub">Lainnya (isi sendiri)</option>
+                </select>
+                
+                <div id="otherSubposition" class="hidden">
+                    <label for="otherSubpositionText">Isi Sub-Posisi Lainnya:</label>
+                    <input type="text" id="otherSubpositionText" name="otherSubpositionText">
+                </div>
+            </div>
 
-  <label for="city">Kota:</label>
-  <input type="text" id="city" name="city" placeholder="Masukkan kota domisili" required>
+            <label for="cvUpload">Unggah CV (max 10MB):</label>
+            <input type="file" id="cvUpload" name="cvUpload" accept=".pdf,.doc,.docx" required>
+            
+            <div class="actions">
+                <button type="submit">Kirim</button>
+                <a href="https://wa.me/6285888818119" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Hubungi via WhatsApp"/>
+                </a>
+            </div>
+        </form>
+    </div>
 
-  <label for="province">Provinsi:</label>
-  <input type="text" id="province" name="province" placeholder="Masukkan provinsi domisili" required>
+    <script>
+        const form = document.getElementById('mcuForm');
+        const positionSelect = document.getElementById('position');
+        const nurseSubposition = document.getElementById('nurseSubposition');
+        const subPositionSelect = document.getElementById('subPosition');
+        const otherSubposition = document.getElementById('otherSubposition');
+        const otherPosition = document.getElementById('otherPosition');
 
-  <label for="position">Posisi:</label>
-  <select id="position" name="position" required>
-    <option value="">Pilih Posisi</option>
-    <option value="Perawat">Perawat</option>
-    <option value="Dokter">Dokter</option>
-    <option value="Analis">Analis</option>
-    <option value="Radiografer">Radiografer</option>
-  </select>
+        // Menampilkan sub-posisi perawat saat posisi 'Perawat' dipilih
+        positionSelect.addEventListener('change', function() {
+            if (positionSelect.value === 'Nurse') {
+                nurseSubposition.classList.remove('hidden');
+            } else {
+                nurseSubposition.classList.add('hidden');
+            }
 
-  <div id="nurseSubsection">
-    <label for="nurseSpecialty">Spesialisasi Perawat:</label>
-    <select id="nurseSpecialty" name="nurseSpecialty">
-      <option value="Audiometri">Audiometri</option>
-      <option value="Spirometri">Spirometri</option>
-      <option value="Visus Mata">Visus Mata</option>
-      <option value="Tensi">Tensi</option>
-      <option value="EKG">EKG</option>
-      <option value="Treadmill">Treadmill</option>
-    </select>
-  </div>
+            // Menampilkan kolom 'Lainnya' jika dipilih
+            if (positionSelect.value === 'Other') {
+                otherPosition.classList.remove('hidden');
+            } else {
+                otherPosition.classList.add('hidden');
+            }
+        });
 
-  <label for="cv">Unggah CV (PDF, max 10MB):</label>
-  <input type="file" id="cv" name="cv" accept="application/pdf" required>
-
-  <button type="submit">Kirim</button>
-</form>
+        // Menampilkan kolom 'Lainnya' pada sub-posisi perawat jika dipilih
+        subPositionSelect.addEventListener('change', function() {
+            if (subPositionSelect.value === 'OtherSub') {
+                otherSubposition.classList.remove('hidden');
+            } else {
+                otherSubposition.classList.add('hidden');
+            }
+        });
 
 <script>
-// Menampilkan sub kategori untuk perawat
-document.getElementById('position').addEventListener('change', function() {
-  if (this.value === 'Perawat') {
-    document.getElementById('nurseSubsection').style.display = 'block';
-  } else {
-    document.getElementById('nurseSubsection').style.display = 'none';
-  }
-});
-
-// Fungsi pengiriman data form
-document.getElementById('mcuForm').addEventListener('submit', function(e) {
-  e.preventDefault();  // Mencegah reload halaman
-
-  var formData = new FormData(e.target);
-  var file = formData.get('cv');
-  var reader = new FileReader();
-
-  reader.onloadend = function() {
-    var base64File = reader.result.split(',')[1];
-
-    // Data yang akan dikirim ke Google Sheets
-    var dataForSheets = {
-      name: formData.get('name'),
-      phone: formData.get('phone'),
-      city: formData.get('city'),
-      province: formData.get('province'),
-      position: formData.get('position'),
-      nurseSpecialty: formData.get('nurseSpecialty')
-    };
-
-    // Data yang akan dikirim ke Google Drive (CV)
-    var dataForDrive = {
-      name: formData.get('name'),
-      cv: base64File,
-      cvMimeType: file.type
-    };
-
-    // Kirim data ke Google Sheets
-    fetch('https://script.google.com/macros/s/AKfycbyDh66Ln5ZDGrgeuEQ4Ei1BvNuyDa3HY8fuO5Kmc0I-yqFZvPQ2YIoFtXURpwGXVGeYxQ/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dataForSheets)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        alert('Data berhasil dikirim ke Google Sheets!');
-      } else {
-        alert('Terjadi kesalahan saat mengirim data ke Google Sheets.');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const fullName = formData.get('name');  // Ambil Nama Lengkap dari form
+        const data = {
+            name: fullName,
+            whatsapp: formData.get('whatsapp'),
+            address: formData.get('address'),
+            city: formData.get('city'),
+            province: formData.get('province'),
+            position: formData.get('position'),
+            otherPosition: formData.get('otherPositionText') || null,
+            subPosition: formData.get('subPosition'),
+            otherSubPosition: formData.get('otherSubpositionText') || null,
+            cv: null,
+            mimeType: null,
+            fileName: null
+        };
+        
+        const cvFile = formData.get('cvUpload');
+        if (cvFile) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                // Mengganti nama file dengan nama lengkap dan ekstensi asli
+                const fileExtension = cvFile.name.split('.').pop();  // Dapatkan ekstensi file
+                data.cv = reader.result.replace(/^data:.+;base64,/, '');
+                data.mimeType = cvFile.type;
+                data.fileName = `${fullName}.${fileExtension}`;  // Mengganti nama file CV dengan Nama Lengkap
+                
+                sendDataToGoogle(data);
+            };
+            reader.readAsDataURL(cvFile);
+        } else {
+            sendDataToGoogle(data);
+        }
     });
 
- // Kirim CV ke Google Drive
-    fetch('https://script.google.com/macros/s/AKfycbz1VQoDwi3DAOR9Ux5QvYMZ0fhIlAZFplEjNC3h19F43Iwoonhrx6ohItmqbzCqMB9n0g/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dataForDrive)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        alert('CV berhasil diunggah ke Google Drive!');
-      } else {
-        alert('Terjadi kesalahan saat mengunggah CV ke Google Drive.');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  };
-
-  reader.readAsDataURL(file); // Membaca file sebagai base64
-});
-</script>
-
+        function sendDataToGoogle(data) {
+            fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.result === 'success') {
+                    alert('Data berhasil dikirim!');
+                } else {
+                    alert('Terjadi kesalahan: ' + result.error);
+                }
+            })
+            .catch(error => {
+                alert('Terjadi kesalahan: ' + error);
+            });
+        }
+    </script>
 </body>
 </html>
