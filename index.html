@@ -180,37 +180,42 @@
     </a>
 </div>
 
-<script>
-    document.getElementById('mcuForm').addEventListener('submit', function (e) {
-        e.preventDefault(); // Mencegah refresh halaman
+document.getElementById('mcuForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Mencegah refresh halaman
 
-        var formData = new FormData(document.getElementById('mcuForm'));
+    var formData = new FormData(document.getElementById('mcuForm'));
 
-        // Cek ukuran file sebelum mengirim
-        var cvFile = document.getElementById('cv').files[0];
-        if (cvFile && cvFile.size > 10 * 1024 * 1024) {
-            alert("Ukuran file CV tidak boleh lebih dari 10 MB");
-            return;
+    // Cek ukuran file sebelum mengirim
+    var cvFile = document.getElementById('cv').files[0];
+    if (cvFile && cvFile.size > 10 * 1024 * 1024) {
+        alert("Ukuran file CV tidak boleh lebih dari 10 MB");
+        return;
+    }
+
+    // Kirim data ke Google Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', { // Ganti dengan URL Google Apps Script Web App Anda
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
         }
-
-        // Kirim data ke Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', { // Ganti dengan URL Google Apps Script Web App Anda
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.result === 'success') {
-                alert('Pendaftaran berhasil!');
-            } else {
-                alert('Pendaftaran gagal. Coba lagi.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan. Coba lagi.');
-        });
+        return response.json();
+    })
+    .then(data => {
+        if (data.result === 'success') {
+            alert('Pendaftaran berhasil!');
+        } else {
+            alert('Pendaftaran gagal. Coba lagi.');
+        }
+    })
+    .catch(error => {
+        console.error('Terjadi kesalahan:', error);
+        alert('Terjadi kesalahan. Coba lagi.');
     });
+});
+
 
     // Tampilkan kolom tambahan ketika "Perawat" atau "Lainnya" dipilih
     document.getElementById('posisi').addEventListener('change', function () {
