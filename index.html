@@ -1,225 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Freelance MCU</title>
-    <style>
-        /* Gaya minimalis dan modern */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
-        
-        body {
-            font-family: 'Roboto Mono', monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #1e1e1e;
-            color: #dcdcdc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        
-        .form-container {
-            background-color: #262626;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        h2 {
-            text-align: center;
-            color: #d4d4d4;
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background-color: transparent;
-            color: #dcdcdc;
-            border: none;
-            border-bottom: 1px solid #3c3c3c;
-            border-radius: 0;
-            font-size: 14px;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-        }
-        
-        input:focus, select:focus {
-            border-color: #f9d12e;
-            outline: none;
-        }
-        
-        input[type="submit"] {
-            background-color: #f9d12e;
-            color: #1e1e1e;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        input[type="submit"]:hover {
-            background-color: #e0b91e;
-        }
-        
-        .whatsapp-btn {
-            display: block;
-            text-align: center;
-            background-color: #25D366;
-            color: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 20px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        
-        .whatsapp-btn:hover {
-            background-color: #1ebc5c;
-        }
-        
-        label {
-            color: #dcdcdc;
-            font-size: 12px;
-        }
-        
-        .hidden-section {
-            display: none;
-            margin-top: 10px;
-        }
-
-    </style>
+  <title>Pendaftaran Freelance MCU</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f7;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #nurseSubsection {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Pendaftaran Freelance MCU</h2>
-    <form id="mcuForm" enctype="multipart/form-data">
-        <label for="name">Nama Lengkap</label>
-        <input type="text" name="name" id="name" placeholder="Nama Lengkap" required>
-        
-        <label for="phone">Nomor Handphone</label>
-        <input type="tel" name="phone" id="phone" placeholder="Nomor Handphone" required>
-        
-        <label for="alamat">Alamat Domisili</label>
-        <input type="text" name="alamat" id="alamat" placeholder="Alamat Domisili" required>
-        
-        <label for="kota">Kota</label>
-        <input type="text" name="kota" id="kota" placeholder="Kota" required>
-        
-        <label for="provinsi">Provinsi</label>
-        <input type="text" name="provinsi" id="provinsi" placeholder="Provinsi" required>
-        
-        <label for="posisi">Posisi</label>
-        <select name="posisi" id="posisi" required>
-            <option value="" disabled selected>Pilih Posisi</option>
-            <option value="Administrasi">Administrasi</option>
-            <option value="Perawat">Perawat</option>
-            <option value="Dokter">Dokter</option>
-            <option value="Analis">Analis</option>
-            <option value="Radiografer">Radiografer</option>
-            <option value="Lainnya">Lainnya</option>
-        </select>
+<h2>Pendaftaran Freelance MCU</h2>
+<form id="mcuForm" enctype="multipart/form-data">
+  <label for="name">Nama:</label>
+  <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
 
-        <!-- Posisi Lainnya -->
-        <div id="posisi-lainnya" class="hidden-section">
-            <label for="posisiLainnya">Posisi Lainnya:</label>
-            <input type="text" name="posisiLainnya" id="posisiLainnya" placeholder="Posisi Lainnya">
-        </div>
+  <label for="phone">Nomor WhatsApp:</label>
+  <input type="text" id="phone" name="phone" placeholder="Masukkan nomor WA" required>
 
-        <!-- Opsi Perawat -->
-        <div id="perawat-options" class="hidden-section">
-            <label>Pilih Bagian Perawat:</label><br>
-            <label><input type="checkbox" name="tugas" value="Tensi"> Tensi</label><br>
-            <label><input type="checkbox" name="tugas" value="Audiometri"> Audiometri</label><br>
-            <label><input type="checkbox" name="tugas" value="Spirometri"> Spirometri</label><br>
-            <label><input type="checkbox" name="tugas" value="EKG"> EKG</label><br>
-            <label><input type="checkbox" name="tugas" value="Treadmill"> Treadmill</label><br>
-            <label><input type="checkbox" name="tugas" value="Visus Mata"> Visus Mata</label><br>
-            <label for="tugasLainnya">Bagian Lainnya (sebutkan):</label>
-            <input type="text" name="tugasLainnya" id="tugasLainnya" placeholder="Bagian Lainnya">
-        </div>
+  <label for="city">Kota:</label>
+  <input type="text" id="city" name="city" placeholder="Masukkan kota domisili" required>
 
-        <label for="cv">Upload CV (PDF)</label>
-        <input type="file" name="cv" id="cv" accept=".pdf" required>
-        
-        <input type="submit" value="Daftar">
-    </form>
-</div>
+  <label for="province">Provinsi:</label>
+  <input type="text" id="province" name="province" placeholder="Masukkan provinsi domisili" required>
 
-document.getElementById('mcuForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Mencegah refresh halaman
+  <label for="position">Posisi:</label>
+  <select id="position" name="position" required>
+    <option value="">Pilih Posisi</option>
+    <option value="Perawat">Perawat</option>
+    <option value="Dokter">Dokter</option>
+    <option value="Analis">Analis</option>
+    <option value="Radiografer">Radiografer</option>
+  </select>
 
-    var formData = new FormData(document.getElementById('mcuForm'));
+  <div id="nurseSubsection">
+    <label for="nurseSpecialty">Spesialisasi Perawat:</label>
+    <select id="nurseSpecialty" name="nurseSpecialty">
+      <option value="Audiometri">Audiometri</option>
+      <option value="Spirometri">Spirometri</option>
+      <option value="Visus Mata">Visus Mata</option>
+      <option value="Tensi">Tensi</option>
+      <option value="EKG">EKG</option>
+      <option value="Treadmill">Treadmill</option>
+    </select>
+  </div>
 
-    // Tambahkan nama file dinamis berdasarkan nama lengkap pengguna
-    var name = document.getElementById('name').value.trim().replace(/\s+/g, '_');
-    var fileInput = document.getElementById('cv');
-    if (fileInput.files.length > 0) {
-        var file = fileInput.files[0];
-        var extension = file.name.split('.').pop(); // Mendapatkan ekstensi file
-        var fileName = name + '_CV.' + extension;
-        formData.append('cvName', fileName); // Simpan nama file dinamis ke formData
-    }
+  <label for="cv">Unggah CV (PDF, max 10MB):</label>
+  <input type="file" id="cv" name="cv" accept="application/pdf" required>
 
-    // Upload file CV ke Google Apps Script untuk menyimpan di Google Drive
-    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(fileResponse => {
-        if (fileResponse.result === 'success') {
-            // Setelah file berhasil di-upload, kirim data lainnya
-            formData.append('cvUrl', fileResponse.cvUrl);
-            return fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
-                method: 'POST',
-                body: formData
-            });
-        } else {
-            console.error('Upload CV gagal:', fileResponse.message);
-            throw new Error('Upload CV gagal.');
-        }
-    })
-    .then(response => response.json())
-    .then(dataResponse => {
-        if (dataResponse.result === 'success') {
-            alert('Pendaftaran berhasil!');
-        } else {
-            alert('Pendaftaran gagal. Coba lagi.');
-        }
-    })
-    .catch(error => {
-        console.error('Terjadi kesalahan:', error);
-        alert('Terjadi kesalahan. Coba lagi.');
-    });
+  <button type="submit">Kirim</button>
+</form>
+
+<script>
+// Menampilkan sub kategori untuk perawat
+document.getElementById('position').addEventListener('change', function() {
+  if (this.value === 'Perawat') {
+    document.getElementById('nurseSubsection').style.display = 'block';
+  } else {
+    document.getElementById('nurseSubsection').style.display = 'none';
+  }
 });
 
+// Fungsi pengiriman data form menggunakan fetch
+document.getElementById('mcuForm').addEventListener('submit', function(e) {
+  e.preventDefault();
 
-// Tampilkan atau sembunyikan pilihan berdasarkan pilihan posisi
-document.getElementById('posisi').addEventListener('change', function () {
-    var perawatOptions = document.getElementById('perawat-options');
-    var posisiLainnya = document.getElementById('posisi-lainnya');
-    
-    if (this.value === 'Perawat') {
-        perawatOptions.style.display = 'block';
-        posisiLainnya.style.display = 'none';
-    } else if (this.value === 'Lainnya') {
-        posisiLainnya.style.display = 'block';
-        perawatOptions.style.display = 'none';
-    } else {
-        perawatOptions.style.display = 'none';
-        posisiLainnya.style.display = 'none';
-    }
+  var formData = new FormData(e.target);
+  var file = formData.get('cv');
+  var reader = new FileReader();
+
+  reader.onloadend = function() {
+    var base64File = reader.result.split(',')[1];
+
+    var data = {
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      city: formData.get('city'),
+      province: formData.get('province'),
+      position: formData.get('position'),
+      nurseSpecialty: formData.get('nurseSpecialty'),
+      cv: base64File,
+      cvMimeType: file.type
+    };
+
+    fetch('https://script.google.com/macros/s/AKfycbyLppqn9c-Xj6Rddckr-h3W4qm1N8yZy3EbBJPfBP2vlZLasfKoHrrQXdx1LU3E_ndo1g/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('Formulir berhasil dikirim!');
+      } else {
+        alert('Terjadi kesalahan.');
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  };
+
+  reader.readAsDataURL(file);
 });
 </script>
 
