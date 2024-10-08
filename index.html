@@ -156,18 +156,17 @@
     </form>
 </div>
 
-<script>
 document.getElementById('mcuForm').addEventListener('submit', function (e) {
     e.preventDefault(); // Mencegah refresh halaman
 
     var formData = new FormData(document.getElementById('mcuForm'));
 
-    // Tambahkan nama file dinamis berdasarkan nama lengkap
+    // Tambahkan nama file dinamis berdasarkan nama lengkap pengguna
     var name = document.getElementById('name').value.trim().replace(/\s+/g, '_');
     var fileInput = document.getElementById('cv');
     if (fileInput.files.length > 0) {
         var file = fileInput.files[0];
-        var extension = file.name.split('.').pop();
+        var extension = file.name.split('.').pop(); // Mendapatkan ekstensi file
         var fileName = name + '_CV.' + extension;
         formData.append('cvName', fileName); // Simpan nama file dinamis ke formData
     }
@@ -182,20 +181,21 @@ document.getElementById('mcuForm').addEventListener('submit', function (e) {
         if (fileResponse.result === 'success') {
             // Setelah file berhasil di-upload, kirim data lainnya
             formData.append('cvUrl', fileResponse.cvUrl);
-            fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
+            return fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => response.json())
-            .then(dataResponse => {
-                if (dataResponse.result === 'success') {
-                    alert('Pendaftaran berhasil!');
-                } else {
-                    alert('Pendaftaran gagal. Coba lagi.');
-                }
             });
         } else {
-            alert('Upload CV gagal. Coba lagi.');
+            console.error('Upload CV gagal:', fileResponse.message);
+            throw new Error('Upload CV gagal.');
+        }
+    })
+    .then(response => response.json())
+    .then(dataResponse => {
+        if (dataResponse.result === 'success') {
+            alert('Pendaftaran berhasil!');
+        } else {
+            alert('Pendaftaran gagal. Coba lagi.');
         }
     })
     .catch(error => {
@@ -203,6 +203,7 @@ document.getElementById('mcuForm').addEventListener('submit', function (e) {
         alert('Terjadi kesalahan. Coba lagi.');
     });
 });
+
 
 // Tampilkan atau sembunyikan pilihan berdasarkan pilihan posisi
 document.getElementById('posisi').addEventListener('change', function () {
