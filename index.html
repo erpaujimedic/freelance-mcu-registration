@@ -29,14 +29,6 @@
             color: #4c4a50;
             margin-bottom: 30px;
         }
-        h1::after {
-            content: "";
-            display: block;
-            width: 60px;
-            height: 4px;
-            background-color: #4c4a50;
-            margin: 10px auto 0;
-        }
         input[type="text"], input[type="tel"], select, textarea, input[type="file"] {
             width: 100%;
             padding: 15px;
@@ -46,12 +38,6 @@
             background-color: #fafafa;
             font-size: 14px;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .submit-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
         }
         input[type="submit"] {
             padding: 12px 20px;
@@ -67,46 +53,17 @@
         input[type="submit"]:hover {
             background-color: #e65b55;
         }
-        .whatsapp-btn {
+        .submit-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            width: 48px;
-            height: 48px;
-            background-color: #25D366;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
-        }
-        .whatsapp-btn img {
-            width: 24px;
-        }
-        .whatsapp-btn:hover {
-            background-color: #1EBB5D;
-        }
-        label {
-            font-size: 14px;
-            color: #666;
-            font-weight: bold;
-        }
-        textarea {
-            resize: vertical;
-        }
-        .hidden-section {
-            display: none;
+            margin-top: 20px;
         }
         footer {
             font-size: 12px;
             text-align: center;
             margin-top: 30px;
             color: #888;
-        }
-        footer a {
-            color: #ff6f61;
-            text-decoration: none;
         }
     </style>
 </head>
@@ -124,14 +81,11 @@
         <label for="alamat">Alamat Domisili:</label>
         <input type="text" name="alamat" id="alamat" placeholder="Alamat Domisili" required>
 
-        <!-- Kota dan Provinsi hanya muncul setelah mengisi alamat domisili -->
-        <div id="location-section" class="hidden-section">
-            <label for="kota">Kota:</label>
-            <input type="text" name="kota" id="kota" placeholder="Kota" required>
+        <label for="kota">Kota:</label>
+        <input type="text" name="kota" id="kota" placeholder="Kota" required>
 
-            <label for="provinsi">Provinsi:</label>
-            <input type="text" name="provinsi" id="provinsi" placeholder="Provinsi" required>
-        </div>
+        <label for="provinsi">Provinsi:</label>
+        <input type="text" name="provinsi" id="provinsi" placeholder="Provinsi" required>
 
         <label for="posisi">Posisi:</label>
         <select name="posisi" id="posisi" required>
@@ -143,26 +97,8 @@
             <option value="Radiografer">Radiografer</option>
         </select>
 
-        <!-- Tugas Perawat hanya muncul jika posisi Perawat dipilih -->
-        <div id="perawat-options" class="hidden-section">
-            <label><input type="checkbox" name="tugas" value="Tensi"> Tensi</label>
-            <label><input type="checkbox" name="tugas" value="Visus Mata"> Visus Mata</label>
-            <label><input type="checkbox" name="tugas" value="EKG"> EKG</label>
-            <label><input type="checkbox" name="tugas" value="Treadmill"> Treadmill</label>
-            <label><input type="checkbox" name="tugas" value="Audiometri"> Audiometri</label>
-            <label><input type="checkbox" name="tugas" value="Spirometri"> Spirometri</label>
-            <label for="tugas-lainnya">Lainnya (sebutkan):</label>
-            <textarea name="tugas-lainnya" id="tugas-lainnya" rows="3" placeholder="Tulis tugas lainnya..."></textarea>
-        </div>
-
-        <label for="cv">Upload CV Terbaru (PDF, max 10 MB):</label>
-        <input type="file" name="cv" id="cv" accept=".pdf" required>
-
         <div class="submit-container">
             <input type="submit" value="Daftar">
-            <a href="https://wa.me/6285888181119?text=Halo%20saya%20mengalami%20kendala%20pada%20formulir%20pendaftaran,%20bisa%20bantu%20saya?" class="whatsapp-btn" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-            </a>
         </div>
     </form>
     <footer>
@@ -171,44 +107,23 @@
 </div>
 
 <script>
-    document.getElementById('alamat').addEventListener('input', function() {
-        var locationSection = document.getElementById('location-section');
-        if (this.value.length > 0) {
-            locationSection.style.display = 'block';
-        } else {
-            locationSection.style.display = 'none';
-        }
-    });
-
-    document.getElementById('posisi').addEventListener('change', function() {
-        var perawatOptions = document.getElementById('perawat-options');
-        if (this.value === 'Perawat') {
-            perawatOptions.style.display = 'block';
-        } else {
-            perawatOptions.style.display = 'none';
-        }
-    });
-
     document.getElementById('mcuForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Mencegah refresh halaman
 
-        var cvFile = document.getElementById('cv').files[0];
-        if (cvFile && cvFile.size > 10 * 1024 * 1024) {
-            alert("Ukuran file CV tidak boleh lebih dari 10 MB");
-            return;
-        }
-
         var formData = new FormData(document.getElementById('mcuForm'));
 
-        // Ubah URL fetch ke endpoint API yang Anda miliki
-        fetch('https://script.google.com/macros/s/AKfycbyz_8v3kHQy-jVAoEdOICjJNWYpSIf_O3Qh96kE8Fs/dev', { // ganti dengan URL sebenarnya
+        // Kirim data ke Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbyz_8v3kHQy-jVAoEdOICjJNWYpSIf_O3Qh96kE8Fs/dev', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
-            alert('Pendaftaran berhasil!');
+            if (data.result === 'success') {
+                alert('Pendaftaran berhasil!');
+            } else {
+                alert('Pendaftaran gagal. Coba lagi.');
+            }
         })
         .catch(error => {
             console.error('Error:', error);
