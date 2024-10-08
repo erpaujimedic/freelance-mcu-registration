@@ -70,6 +70,23 @@
             background-color: #e0b91e;
         }
         
+        .whatsapp-btn {
+            display: block;
+            text-align: center;
+            background-color: #25D366;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #1ebc5c;
+        }
+        
         label {
             color: #dcdcdc;
             font-size: 12px;
@@ -113,11 +130,13 @@
             <option value="Lainnya">Lainnya</option>
         </select>
 
+        <!-- Posisi Lainnya -->
         <div id="posisi-lainnya" class="hidden-section">
             <label for="posisiLainnya">Posisi Lainnya:</label>
             <input type="text" name="posisiLainnya" id="posisiLainnya" placeholder="Posisi Lainnya">
         </div>
 
+        <!-- Opsi Perawat -->
         <div id="perawat-options" class="hidden-section">
             <label>Pilih Bagian Perawat:</label><br>
             <label><input type="checkbox" name="tugas" value="Tensi"> Tensi</label><br>
@@ -143,17 +162,27 @@ document.getElementById('mcuForm').addEventListener('submit', function (e) {
 
     var formData = new FormData(document.getElementById('mcuForm'));
 
-    // Upload file CV ke endpoint pertama
-    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', { // Ganti dengan URL Web App untuk upload CV
+    // Tambahkan nama file dinamis berdasarkan nama lengkap
+    var name = document.getElementById('name').value.trim().replace(/\s+/g, '_');
+    var fileInput = document.getElementById('cv');
+    if (fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        var extension = file.name.split('.').pop();
+        var fileName = name + '_CV.' + extension;
+        formData.append('cvName', fileName); // Simpan nama file dinamis ke formData
+    }
+
+    // Upload file CV ke Google Apps Script untuk menyimpan di Google Drive
+    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
         method: 'POST',
         body: formData
     })
     .then(response => response.json())
     .then(fileResponse => {
         if (fileResponse.result === 'success') {
-            // Setelah file berhasil di-upload, kirim data lainnya ke endpoint kedua
+            // Setelah file berhasil di-upload, kirim data lainnya
             formData.append('cvUrl', fileResponse.cvUrl);
-            fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', { // Ganti dengan URL Web App untuk simpan data
+            fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
                 method: 'POST',
                 body: formData
             })
@@ -173,6 +202,23 @@ document.getElementById('mcuForm').addEventListener('submit', function (e) {
         console.error('Terjadi kesalahan:', error);
         alert('Terjadi kesalahan. Coba lagi.');
     });
+});
+
+// Tampilkan atau sembunyikan pilihan berdasarkan pilihan posisi
+document.getElementById('posisi').addEventListener('change', function () {
+    var perawatOptions = document.getElementById('perawat-options');
+    var posisiLainnya = document.getElementById('posisi-lainnya');
+    
+    if (this.value === 'Perawat') {
+        perawatOptions.style.display = 'block';
+        posisiLainnya.style.display = 'none';
+    } else if (this.value === 'Lainnya') {
+        posisiLainnya.style.display = 'block';
+        perawatOptions.style.display = 'none';
+    } else {
+        perawatOptions.style.display = 'none';
+        posisiLainnya.style.display = 'none';
+    }
 });
 </script>
 
