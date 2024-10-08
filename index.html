@@ -98,7 +98,7 @@ document.getElementById('position').addEventListener('change', function() {
 
 // Fungsi pengiriman data form menggunakan fetch
 document.getElementById('mcuForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+  e.preventDefault();  // Mencegah reload halaman
 
   var formData = new FormData(e.target);
   var file = formData.get('cv');
@@ -118,7 +118,8 @@ document.getElementById('mcuForm').addEventListener('submit', function(e) {
       cvMimeType: file.type
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbyLppqn9c-Xj6Rddckr-h3W4qm1N8yZy3EbBJPfBP2vlZLasfKoHrrQXdx1LU3E_ndo1g/exec', {
+    // Ganti URL_APPS_SCRIPT_KAMU dengan URL dari Google Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -128,10 +129,13 @@ document.getElementById('mcuForm').addEventListener('submit', function(e) {
       if (data.status === 'success') {
         alert('Formulir berhasil dikirim!');
       } else {
-        alert('Terjadi kesalahan.');
+        alert('Terjadi kesalahan saat pengiriman.');
       }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan pada jaringan.');
+    });
   };
 
   reader.readAsDataURL(file);
