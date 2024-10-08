@@ -3,92 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Freelance MCU - Dynamic Form</title>
+    <title>Pendaftaran Freelance MCU</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300&display=swap');
+        /* Gaya sederhana untuk form */
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #f5f7fa 30%, #c3cfe2 100%);
-            font-family: 'Poppins', sans-serif;
-            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
         }
         .form-container {
-            width: 500px;
             background-color: #fff;
-            border-radius: 20px;
-            padding: 40px;
-            margin: 40px auto;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
         }
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            text-align: center;
-            color: #4c4a50;
-            margin-bottom: 30px;
-        }
-        input[type="text"], input[type="tel"], select, textarea, input[type="file"] {
+        input, select {
             width: 100%;
-            padding: 15px;
+            padding: 10px;
             margin: 10px 0;
-            border-radius: 12px;
             border: 1px solid #ddd;
-            background-color: #fafafa;
-            font-size: 14px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
         }
         input[type="submit"] {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 12px;
-            background-color: #ff6f61;
+            background-color: #4CAF50;
             color: white;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
         input[type="submit"]:hover {
-            background-color: #e65b55;
-        }
-        .submit-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-        footer {
-            font-size: 12px;
-            text-align: center;
-            margin-top: 30px;
-            color: #888;
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <h1>Pendaftaran Freelance MCU</h1>
-    <form id="mcuForm" enctype="multipart/form-data">
-        <label for="name">Nama Lengkap:</label>
-        <input type="text" name="name" id="name" placeholder="Nama Lengkap" required>
-
-        <label for="phone">Nomor Handphone:</label>
-        <input type="tel" name="phone" id="phone" placeholder="Nomor Handphone" required>
-
-        <label for="alamat">Alamat Domisili:</label>
-        <input type="text" name="alamat" id="alamat" placeholder="Alamat Domisili" required>
-
-        <label for="kota">Kota:</label>
-        <input type="text" name="kota" id="kota" placeholder="Kota" required>
-
-        <label for="provinsi">Provinsi:</label>
-        <input type="text" name="provinsi" id="provinsi" placeholder="Provinsi" required>
-
-        <label for="posisi">Posisi:</label>
-        <select name="posisi" id="posisi" required>
+    <h2>Pendaftaran Freelance MCU</h2>
+    <form id="mcuForm">
+        <input type="text" name="name" placeholder="Nama Lengkap" required>
+        <input type="tel" name="phone" placeholder="Nomor Handphone" required>
+        <input type="text" name="alamat" placeholder="Alamat Domisili" required>
+        <input type="text" name="kota" placeholder="Kota" required>
+        <input type="text" name="provinsi" placeholder="Provinsi" required>
+        <select name="posisi" required>
             <option value="" disabled selected>Pilih Posisi</option>
             <option value="Administrasi">Administrasi</option>
             <option value="Perawat">Perawat</option>
@@ -96,14 +58,8 @@
             <option value="Analis">Analis</option>
             <option value="Radiografer">Radiografer</option>
         </select>
-
-        <div class="submit-container">
-            <input type="submit" value="Daftar">
-        </div>
+        <input type="submit" value="Daftar">
     </form>
-    <footer>
-        Freelance MCU Platform &copy; 2024
-    </footer>
 </div>
 
 <script>
@@ -113,7 +69,7 @@
         var formData = new FormData(document.getElementById('mcuForm'));
 
         // Kirim data ke Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbyz_8v3kHQy-jVAoEdOICjJNWYpSIf_O3Qh96kE8Fs/dev', {
+        fetch('https://script.google.com/macros/s/AKfycbyz_8v3kHQy-jVAoEdOICjJNWYpSIf_O3Qh96kE8Fs/dev', { // Ganti dengan URL yang Anda dapat dari Google Apps Script
             method: 'POST',
             body: formData
         })
