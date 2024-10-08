@@ -196,25 +196,32 @@
     });
 
         function sendDataToGoogle(data) {
-            fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.result === 'success') {
-                    alert('Data berhasil dikirim!');
-                } else {
-                    alert('Terjadi kesalahan: ' + result.error);
-                }
-            })
-            .catch(error => {
-                alert('Terjadi kesalahan: ' + error);
-            });
+    fetch('https://script.google.com/macros/s/AKfycbw9zrc8ACgvjA0R5a5xzIWD1yW9LkKS90fZ6uzCEf0L/dev', {  // Ganti dengan URL Web App yang benar
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
         }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();  // Pastikan Web App mengembalikan JSON
+    })
+    .then(result => {
+        if (result.result === 'success') {
+            alert('Data berhasil dikirim!');
+        } else {
+            alert('Terjadi kesalahan: ' + result.error);
+        }
+    })
+    .catch(error => {
+        console.error('Terjadi kesalahan:', error);  // Log error ke konsol untuk investigasi
+        alert('Terjadi kesalahan: ' + error);
+    });
+}
+
     </script>
 </body>
 </html>
