@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Tenaga Medis Freelance MCU</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <img src="assets/images/logo.png" alt="Logo" id="logo">
+        <h1>Pendaftaran Tenaga Medis Freelance MCU</h1>
+    </header>
+
+    <section>
+        <form id="registrationForm" name="registrationForm" enctype="multipart/form-data">
+            <label for="fullName">Nama Lengkap:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="whatsapp">Nomor WhatsApp:</label>
+            <input type="tel" id="whatsapp" name="whatsapp" required>
+
+            <label for="alamat">Alamat Domisili:</label>
+            <input type="text" id="alamat" name="alamat" required>
+
+            <label for="kota">Kota:</label>
+            <input type="text" id="kota" name="kota" required>
+
+            <label for="provinsi">Provinsi:</label>
+            <input type="text" id="provinsi" name="provinsi" required>
+
+            <label for="position">Posisi:</label>
+            <select id="position" name="position" required>
+                <option value="Dokter">Dokter</option>
+                <option value="Perawat">Perawat</option>
+                <option value="Analis">Analis</option>
+                <option value="Radiografer">Radiografer</option>
+                <option value="Administrator">Administrator</option>
+            </select>
+
+            <!-- Dropdown khusus Perawat -->
+            <div id="perawatOptions" style="display: none;">
+                <label for="subPosition">Sub-Posisi Perawat:</label>
+                <select id="subPosition" name="subPosition">
+                    <option value="Tensi">Tensi</option>
+                    <option value="EKG">EKG</option>
+                    <option value="Visus Mata">Visus Mata</option>
+                    <option value="Audiometri">Audiometri</option>
+                    <option value="Spirometri">Spirometri</option>
+                    <option value="Treadmill">Treadmill</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+
+                <div id="otherSubPosition" style="display: none;">
+                    <label for="customSubPosition">Isi Sub-Posisi Lainnya:</label>
+                    <input type="text" id="customSubPosition" name="customSubPosition">
+                </div>
+            </div>
+
+            <label for="cv">Upload CV (max 10MB):</label>
+            <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+
+            <button type="submit">Daftar</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>Hubungi kami melalui <a href="https://wa.me/085888181119"><img src="assets/images/whatsapp.png" alt="WhatsApp"></a></p>
+    </footer>
+
+    <script src="js/form.js"></script>
+</body>
+</html>
