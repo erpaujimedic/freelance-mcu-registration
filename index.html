@@ -193,18 +193,20 @@
     });
 
     // Submit form
-    document.getElementById('mcuForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+  <script>
+  document.getElementById('mcuForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Mencegah form dari reload halaman
 
-      var formData = new FormData(this);
-      fetch('https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => alert(data.status))
-      .catch(error => console.error('Error:', error));
-    });
-  </script>
+    var formData = new FormData(this);  // Ambil data dari form
+
+    fetch('https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => alert(data.status))
+    .catch(error => console.error('Error:', error));
+  });
+</script>
 </body>
 </html>
