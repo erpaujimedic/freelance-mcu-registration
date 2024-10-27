@@ -46,13 +46,27 @@
         .hidden {
             display: none;
         }
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .error {
+            background-color: #f44336;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Pendaftaran Freelance MCU</h1>
-        <form id="freelanceForm" action="https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec" method="post" enctype="multipart/form-data">
+        <form id="freelanceForm">
             <label for="nama">Nama Lengkap beserta Gelar:</label>
             <input type="text" id="nama" name="nama" required>
 
@@ -80,12 +94,52 @@
 
             <input type="text" id="posisi_lainnya" name="posisi_lainnya" class="hidden" placeholder="Masukkan posisi lainnya">
 
-            <label for="file_upload">Upload File (CV, Ijazah, KTP, STR dll, untuk persyaratan wajib anggota freelance perusahaan):</label>
+            <label for="file_upload">Upload File (CV, Ijazah, dll.):</label>
             <input type="file" id="file_upload" name="file_upload" required multiple>
 
             <input type="submit" value="Daftar Sekarang">
         </form>
+
+        <div id="response" class="alert"></div>
     </div>
+
+    <script>
+        document.getElementById('freelanceForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah pengiriman form secara default
+
+            // Ambil data dari form
+            var formData = new FormData(this);
+
+            // Kirim data ke Google Apps Script menggunakan AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec', true);  // Ganti dengan URL Google Apps Script Web App kamu
+
+            xhr.onload = function() {
+                var responseElement = document.getElementById('response');
+                if (xhr.status === 200) {
+                    // Tampilkan pesan sukses
+                    responseElement.innerHTML = "Data berhasil dikirim!";
+                    responseElement.className = "alert success";
+                    responseElement.style.display = "block";
+                } else {
+                    // Tampilkan pesan error
+                    responseElement.innerHTML = "Terjadi kesalahan saat mengirim data.";
+                    responseElement.className = "alert error";
+                    responseElement.style.display = "block";
+                }
+            };
+
+            xhr.onerror = function() {
+                var responseElement = document.getElementById('response');
+                responseElement.innerHTML = "Terjadi kesalahan jaringan.";
+                responseElement.className = "alert error";
+                responseElement.style.display = "block";
+            };
+
+            // Kirim form data
+            xhr.send(formData);
+        });
+    </script>
 
 </body>
 </html>
