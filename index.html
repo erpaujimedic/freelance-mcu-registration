@@ -193,18 +193,31 @@
     });
 
     // Submit form
-  <script>
+    <script>
   document.getElementById('mcuForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Mencegah form dari reload halaman
+    event.preventDefault();  // Mencegah reload halaman
 
     var formData = new FormData(this);  // Ambil data dari form
+    var entries = {};  // Menyimpan data form
 
+    // Mengubah FormData ke format yang bisa dibaca
+    formData.forEach(function(value, key){
+      entries[key] = value;
+    });
+
+    // Mengirim data dengan URLSearchParams
     fetch('https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec', {
       method: 'POST',
-      body: formData
+      body: new URLSearchParams(entries)
     })
     .then(response => response.json())
-    .then(data => alert(data.status))
+    .then(data => {
+      if (data.status === 'Success') {
+        alert('Data berhasil dikirim!');
+      } else {
+        alert('Terjadi kesalahan: ' + data.status);
+      }
+    })
     .catch(error => console.error('Error:', error));
   });
 </script>
