@@ -46,35 +46,13 @@
         .hidden {
             display: none;
         }
-        .flex-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .flex-item {
-            flex: 1;
-            margin: 5px;
-            text-align: center;
-        }
-        .wa-link {
-            background-color: #25D366;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-        }
-        .wa-link:hover {
-            background-color: #1DA955;
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Pendaftaran Freelance MCU</h1>
-        <form action="https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec" method="post" enctype="multipart/form-data">
+        <form id="freelanceForm" action="https://script.google.com/macros/s/AKfycbwSzi8NZb9vBL3a4dBlm6XYeNiHYUOlp3kDe8ucj41fb3IUoSTR7XJIrufGrGnHDEvd/exec" method="post" enctype="multipart/form-data">
             <label for="nama">Nama Lengkap beserta Gelar:</label>
             <input type="text" id="nama" name="nama" required>
 
@@ -82,18 +60,16 @@
             <input type="text" id="telepon" name="telepon" required>
 
             <label for="domisili">Alamat Domisili:</label>
-            <input type="text" id="domisili" name="domisili" required onblur="showLocationPopup()">
+            <input type="text" id="domisili" name="domisili" required>
 
-            <div id="locationDetails" class="hidden">
-                <label for="kabupaten">Kabupaten/Kota:</label>
-                <input type="text" id="kabupaten" name="kabupaten" required>
+            <label for="kabupaten">Kabupaten/Kota:</label>
+            <input type="text" id="kabupaten" name="kabupaten" required>
 
-                <label for="provinsi">Provinsi:</label>
-                <input type="text" id="provinsi" name="provinsi" required>
-            </div>
+            <label for="provinsi">Provinsi:</label>
+            <input type="text" id="provinsi" name="provinsi" required>
 
             <label for="posisi">Posisi:</label>
-            <select id="posisi" name="posisi" required onchange="togglePerawatSpecialization()">
+            <select id="posisi" name="posisi" required>
                 <option value="">--Pilih Posisi--</option>
                 <option value="Dokter">Dokter</option>
                 <option value="Perawat">Perawat</option>
@@ -104,74 +80,12 @@
 
             <input type="text" id="posisi_lainnya" name="posisi_lainnya" class="hidden" placeholder="Masukkan posisi lainnya">
 
-            <div id="perawatSpecialization" class="hidden">
-                <label for="spesialisasi_perawat">Spesialisasi Perawat:</label>
-                <select id="spesialisasi_perawat" name="spesialisasi_perawat" onchange="toggleSpesialisasiLainnya()">
-                    <option value="">--Pilih Spesialisasi--</option>
-                    <option value="EKG">EKG</option>
-                    <option value="Treadmill Test">Treadmill Test</option>
-                    <option value="Tensi TB BB">Tensi TB BB</option>
-                    <option value="Visus Mata">Visus Mata</option>
-                    <option value="Audiometri">Audiometri</option>
-                    <option value="Spirometri">Spirometri</option>
-                    <option value="Lainnya">Lainnya (isi bebas)</option>
-                </select>
-                <input type="text" id="spesialisasi_lainnya" name="spesialisasi_lainnya" class="hidden" placeholder="Masukkan spesialisasi lainnya">
-            </div>
-
-            <!-- Bagian untuk Upload File -->
-            <label for="file_upload">Upload File (CV, Ijazah, STR, KTP untuk Database freelance dan persyaratan petugas mcu.):</label>
+            <label for="file_upload">Upload File (CV, Ijazah, KTP, STR dll, untuk persyaratan wajib anggota freelance perusahaan):</label>
             <input type="file" id="file_upload" name="file_upload" required multiple>
 
             <input type="submit" value="Daftar Sekarang">
         </form>
     </div>
-
-    <script>
-        function showLocationPopup() {
-            let domisiliInput = document.getElementById('domisili').value;
-            if (domisiliInput) {
-                document.getElementById('locationDetails').classList.remove('hidden');
-                let kabupaten = prompt("Masukkan Kabupaten/Kota untuk " + domisiliInput);
-                let provinsi = prompt("Masukkan Provinsi untuk " + domisiliInput);
-
-                if (kabupaten) {
-                    document.getElementById('kabupaten').value = kabupaten;
-                }
-                if (provinsi) {
-                    document.getElementById('provinsi').value = provinsi;
-                }
-            }
-        }
-
-        function togglePerawatSpecialization() {
-            let posisi = document.getElementById('posisi').value;
-            let perawatSpecialization = document.getElementById('perawatSpecialization');
-            let posisiLainnya = document.getElementById('posisi_lainnya');
-
-            if (posisi === 'Perawat') {
-                perawatSpecialization.classList.remove('hidden');
-                posisiLainnya.classList.add('hidden');
-            } else if (posisi === 'Lainnya') {
-                posisiLainnya.classList.remove('hidden');
-                perawatSpecialization.classList.add('hidden');
-            } else {
-                perawatSpecialization.classList.add('hidden');
-                posisiLainnya.classList.add('hidden');
-            }
-        }
-
-        function toggleSpesialisasiLainnya() {
-            let spesialisasi = document.getElementById('spesialisasi_perawat').value;
-            let spesialisasiLainnya = document.getElementById('spesialisasi_lainnya');
-
-            if (spesialisasi === 'Lainnya') {
-                spesialisasiLainnya.classList.remove('hidden');
-            } else {
-                spesialisasiLainnya.classList.add('hidden');
-            }
-        }
-    </script>
 
 </body>
 </html>
